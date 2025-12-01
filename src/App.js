@@ -4,7 +4,7 @@ import Login from './components/Login';
 import CommunicationRoom from './components/CommunicationRoom';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || 'http://localhost:5000';
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "akku-backend-production.up.railway.app";
 
 function App() {
   const [user, setUser] = useState(null);
