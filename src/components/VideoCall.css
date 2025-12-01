@@ -1,0 +1,126 @@
+.video-call-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+
+.video-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #1a1a1a;
+}
+
+.video-wrapper.remote-video {
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 1;
+}
+
+.video-wrapper.local-video {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  height: 225px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 3px solid #4CAF50;
+  z-index: 2;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.video-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #888;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 3rem;
+  z-index: 10;
+}
+
+.video-overlay p {
+  font-size: 1rem;
+  color: #aaa;
+  margin: 0;
+}
+
+.call-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.control-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: #3a3a3a;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-button:hover {
+  background: #4a4a4a;
+  transform: scale(1.1);
+}
+
+.control-button.muted {
+  background: #f44336;
+}
+
+.control-button.disabled {
+  background: #555;
+  opacity: 0.6;
+}
+
+.control-button.hangup {
+  background: #f44336;
+}
+
+.control-button.hangup:hover {
+  background: #d32f2f;
+}
+
