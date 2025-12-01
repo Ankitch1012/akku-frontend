@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import Login from './components/Login';
-import CommunicationRoom from './components/CommunicationRoom';
-import { io } from 'socket.io-client';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Login from "./components/Login";
+import CommunicationRoom from "./components/CommunicationRoom";
+import { io } from "socket.io-client";
 
-const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "akku-backend-production.up.railway.app";
+const SOCKET_URL = process.env.REACT_APP_SOCKET_URL || "https://akku-backend-production.up.railway.app";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -12,48 +12,36 @@ function App() {
   const [roomId, setRoomId] = useState(null);
 
   useEffect(() => {
-    // Initialize socket connection
     const newSocket = io(SOCKET_URL, {
-      transports: ['websocket', 'polling'],
+      withCredentials: true,
+      transports: ["websocket", "polling"],
       reconnection: true,
+      reconnectionAttempts: 5,
       reconnectionDelay: 1000,
-      reconnectionAttempts: 5
     });
 
-    newSocket.on('connect', () => {
-      console.log('Connected to server:', newSocket.id);
-    });
-
-    newSocket.on('disconnect', () => {
-      console.log('Disconnected from server');
-    });
+    newSocket.on("connect", () => console.log("✅ Socket connected:", newSocket.id));
+    newSocket.on("disconnect", () => console.log("❌ Socket disconnected"));
 
     setSocket(newSocket);
-
-    return () => {
-      newSocket.close();
-    };
+    return () => newSocket.close();
   }, []);
 
   const handleLogin = (username, userId, room) => {
     if (socket) {
-      socket.emit('register', { username, userId });
+      socket.emit("register", { username, userId });
       setUser({ username, userId });
       setRoomId(room);
     }
   };
 
   const handleLogout = () => {
-    if (socket) {
-      socket.disconnect();
-    }
+    socket?.disconnect();
     setUser(null);
     setRoomId(null);
   };
 
-  if (!user || !socket) {
-    return <Login onLogin={handleLogin} />;
-  }
+  if (!user || !socket) return <Login onLogin={handleLogin} />;
 
   return (
     <CommunicationRoom
@@ -66,4 +54,3 @@ function App() {
 }
 
 export default App;
-
